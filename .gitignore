@@ -12,3 +12,4 @@ build*/
 !.editorconfig
 !.gitignore
 !.gitlab-ci.yml
+!.travis.yml
