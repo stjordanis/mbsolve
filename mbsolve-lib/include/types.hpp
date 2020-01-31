@@ -34,7 +34,6 @@ namespace mbsolve {
  * \ingroup MBSOLVE_LIB
  */
 typedef double real;
-//typedef float real;
 
 /**
  * Reduced Planck's constant.
@@ -43,10 +42,16 @@ typedef double real;
 static const real HBAR = 1.05457266e-34;
 
 /**
+ * Pi. Should be around 3 more or less.
+ * \ingroup MBSOLVE_LIB
+ */
+static const real PI = std::atan(1.0) * 4.0;
+
+/**
  * Vacuum permeability.
  * \ingroup MBSOLVE_LIB
  */
-static const real MU0 = M_PI * 4e-7;
+static const real MU0 = PI * 4e-7;
 
 /**
  * Vacuum permittivity.
@@ -59,7 +64,6 @@ static const real EPS0 = 8.854187817e-12;
  * \ingroup MBSOLVE_LIB
  */
 static const real E0 = 1.60217733e-19;
-
 }
 
 #endif

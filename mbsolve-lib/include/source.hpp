@@ -134,7 +134,7 @@ private:
 
     real calc_value(real t) const
     {
-        return sin(2 * M_PI * m_freq * t + m_phase);
+        return sin(2 * PI * m_freq * t + m_phase);
     }
 
 public:
@@ -187,10 +187,9 @@ public:
      */
     real calc_value(real t) const
     {
-        return 1/std::cosh(m_beta * t - m_phase) *
-            sin(2 * M_PI * m_freq * t - m_phase_sin);
+        return 1 / std::cosh(m_beta * t - m_phase) *
+            sin(2 * PI * m_freq * t - m_phase_sin);
     }
-
 };
 
 /*
@@ -212,7 +211,7 @@ public:
     real calc_value(real t) const
     {
         return 1/std::cosh(m_beta * (t - m_phase)) *
-            sin(2 * M_PI * m_freq * (t - m_phase - 1/(m_freq * 4)));
+            sin(2 * PI * m_freq * (t - m_phase - 1/(m_freq * 4)));
     }
 
 };
@@ -241,27 +240,26 @@ public:
      * \param [in] phase       Phase \f$ t_0 \f$ of the source.
      * \param [in] tau         Parameter \f$ \tau \f$.
      */
-    gaussian_pulse(const std::string& name,
-                   real position,
-                   type source_type,
-                   real ampl,
-                   real freq,
-                   real phase,
-                   real tau) :
-        source(name, position, source_type, ampl, freq, phase), m_tau(tau)
+    gaussian_pulse(
+        const std::string& name,
+        real position,
+        type source_type,
+        real ampl,
+        real freq,
+        real phase,
+        real tau)
+      : source(name, position, source_type, ampl, freq, phase), m_tau(tau)
     {
     }
 
     real calc_value(real t) const
     {
-        return exp( - (t - m_phase) * (t - m_phase) / (m_tau * m_tau)) *
-            sin(2 * M_PI * m_freq * t);
+        return exp(-(t - m_phase) * (t - m_phase) / (m_tau * m_tau)) *
+            sin(2 * PI * m_freq * t);
     }
 };
 
-
 /* TODO: custom functor source / callback function? */
-
 }
 
 #endif

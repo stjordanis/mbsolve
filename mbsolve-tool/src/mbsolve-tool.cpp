@@ -212,12 +212,18 @@ int main(int argc, char **argv)
             mbsolve::qm_operator rho_init({1, 0, 0});
 
             /* Song basic scenario */
-            scen = std::make_shared<mbsolve::scenario>
-                ("Basic", num_gridpoints, sim_endtime, rho_init);
+            scen = std::make_shared<mbsolve::scenario>(
+                "Basic", num_gridpoints, sim_endtime, rho_init);
 
-            auto sech_pulse = std::make_shared<mbsolve::sech_pulse>
-                ("sech", 0.0, mbsolve::source::hard_source, 3.5471e9,
-                 3.8118e14, 17.248, 1.76/5e-15, -M_PI/2);
+            auto sech_pulse = std::make_shared<mbsolve::sech_pulse>(
+                "sech",
+                0.0,
+                mbsolve::source::hard_source,
+                3.5471e9,
+                3.8118e14,
+                17.248,
+                1.76 / 5e-15,
+                -mbsolve::PI / 2);
             scen->add_source(sech_pulse);
 
             scen->add_record(std::make_shared<mbsolve::record>
@@ -241,8 +247,8 @@ int main(int argc, char **argv)
              */
 
             /* set up quantum mechanical description */
-            auto qm = std::make_shared<mbsolve::qm_desc_2lvl>
-                (1e24, 2 * M_PI * 2e14, 6.24e-11, 1.0e10, 1.0e10);
+            auto qm = std::make_shared<mbsolve::qm_desc_2lvl>(
+                1e24, 2 * mbsolve::PI * 2e14, 6.24e-11, 1.0e10, 1.0e10);
 
             /* materials */
             auto mat_vac = std::make_shared<mbsolve::material>("Vacuum");
@@ -295,11 +301,20 @@ int main(int argc, char **argv)
              */
 
             /* set up quantum mechanical descriptions */
-            auto qm_gain = std::make_shared<mbsolve::qm_desc_2lvl>
-                (5e21, 2 * M_PI * 3.4e12, 2e-9, 1.0/10e-12, 1.0/200e-15, 1.0);
+            auto qm_gain = std::make_shared<mbsolve::qm_desc_2lvl>(
+                5e21,
+                2 * mbsolve::PI * 3.4e12,
+                2e-9,
+                1.0 / 10e-12,
+                1.0 / 200e-15,
+                1.0);
 
-            auto qm_absorber = std::make_shared<mbsolve::qm_desc_2lvl>
-                (1e21, 2 * M_PI * 3.4e12, 6e-9, 1.0/3e-12, 1.0/160e-15);
+            auto qm_absorber = std::make_shared<mbsolve::qm_desc_2lvl>(
+                1e21,
+                2 * mbsolve::PI * 3.4e12,
+                6e-9,
+                1.0 / 3e-12,
+                1.0 / 160e-15);
 
             /* materials */
             auto mat_absorber = std::make_shared<mbsolve::material>
@@ -353,8 +368,9 @@ int main(int argc, char **argv)
             /* set up quantum mechanical description */
             std::vector<mbsolve::real> energies(6, 0.0);
             for (int i = 1; i < 6; i++) {
-                energies[i] = energies[i - 1] + (1.0 - 0.1 * (i - 3)) *
-                    mbsolve::HBAR * 2 * M_PI * 1e13;
+                energies[i] = energies[i - 1] +
+                    (1.0 - 0.1 * (i - 3)) * mbsolve::HBAR * 2 * mbsolve::PI *
+                        1e13;
             }
 
             mbsolve::qm_operator H(energies);
