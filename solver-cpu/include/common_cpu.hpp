@@ -49,7 +49,7 @@ mb_aligned_free(void* ptr)
 inline void*
 mb_aligned_alloc(size_t size)
 {
-    return _align_malloc(size, ALIGN);
+    return _aligned_malloc(size, ALIGN);
 }
 
 inline void
