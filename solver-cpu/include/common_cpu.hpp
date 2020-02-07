@@ -28,12 +28,14 @@
 #define ALIGN 64
 
 #ifdef __INTEL_COMPILER
-__mb_on_device inline void *mb_aligned_alloc(size_t size)
+__mb_on_device inline void*
+mb_aligned_alloc(size_t size)
 {
     return _mm_malloc(size, ALIGN);
 }
 
-__mb_on_device inline void mb_aligned_free(void *ptr)
+__mb_on_device inline void
+mb_aligned_free(void* ptr)
 {
     _mm_free(ptr);
 }
@@ -42,9 +44,28 @@ __mb_on_device inline void mb_aligned_free(void *ptr)
 
 #else
 
-inline void *mb_aligned_alloc(size_t size)
+#ifdef _WIN32
+
+inline void*
+mb_aligned_alloc(size_t size)
 {
-    void *addr;
+    return _align_malloc(size, ALIGN);
+}
+
+inline void
+mb_aligned_free(void* ptr)
+{
+    _aligned_free(ptr);
+}
+
+#define __mb_assume_aligned(ptr)
+
+#else
+
+inline void*
+mb_aligned_alloc(size_t size)
+{
+    void* addr;
     int ret;
 
     ret = posix_memalign(&addr, ALIGN, size);
@@ -56,12 +77,15 @@ inline void *mb_aligned_alloc(size_t size)
     return addr;
 }
 
-inline void mb_aligned_free(void *ptr)
+inline void
+mb_aligned_free(void* ptr)
 {
     free(ptr);
 }
 
 #define __mb_assume_aligned(ptr) __builtin_assume_aligned(ptr, ALIGN)
+
+#endif
 
 #endif
 
